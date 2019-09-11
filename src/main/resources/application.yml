@@ -1,0 +1,61 @@
+server:
+  context-path: /
+  port: 10905
+#  tomcat:
+#    uri-encoding: utf-8
+#    remote-ip-header: x-forwarded-for
+#    protocol-header: x-forwarded-proto
+#    port-header: X-Forwarded-Port
+#    max-connections: 10000
+#    # 最大线程数
+#    max-threads: 1000
+#    # 最小备用线程数
+#    min-spare-threads: 200
+#    # 请求队列
+#    accept-count: 500
+#    use-forward-headers: true
+  undertow:
+    # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
+    # 不要设置过大，如果过大，启动项目会报错：打开文件数过多
+    io-threads: 15
+    # 阻塞任务线程池, 当执行类似servlet请求阻塞IO操作, undertow会从这个线程池中取得线程
+    # 它的值设置取决于系统线程执行任务的阻塞系数，默认值是IO线程数*8
+    worker-threads: 64
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
+    # 每块buffer的空间大小,越小的空间被利用越充分，不要设置太大，以免影响其他应用，合适即可
+    buffer-size: 1024
+    # 是否分配的直接内存(NIO直接分配的堆外内存)
+    direct-buffers: true
+  error:
+    path: /api/error
+
+#mongoDB配置
+mongoDB:
+  # 服务器地址
+  host: localhost
+  # 服务器连接端口
+  port: 27017
+  # 服务器连接密码（默认为空）
+  username: admin
+  # 服务器连接密码（默认为空）
+  password: admin
+  # 连接超时时间（毫秒）
+  timeout: 10000
+  #每个主机的连接数
+  connectionsPerHost: 10
+  #最大等待时间
+  maxWaitTime: 5000
+  #允许开启线程数
+  threadsAllowed : 5000
+
+#Mqtt配置
+mqtt:
+  host: 192.168.1.143
+  port: 10908
+  username: admin
+  password: admin
+  keystore: p12test.keystore
+  keypass: Aikey.srv
+  clientId: serverclient
+
+
